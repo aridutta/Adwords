@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cassandra="http://www.springframework.org/schema/data/cassandra"
+	xmlns:cass="http://www.springframework.org/schema/cql" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/cql http://www.springframework.org/schema/cql/spring-cql-1.0.xsd
+    http://www.springframework.org/schema/data/cassandra http://www.springframework.org/schema/data/cassandra/spring-cassandra-1.0.xsd
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+	<!-- <bean id="CassandraCredentials2" class="CdCassendra.Called.Bean.CassandraCredentials">
+		<constructor-arg type="String" value="10.181.160.136" />
+		<constructor-arg type="String" value="9042" />
+		<constructor-arg type="String" value="diginius_data" />
+	</bean> -->
+	
+	<bean id="CassandraCredentials2" class="CdCassendra.Called.Bean.CassandraCredentials">
+		<constructor-arg type="String" value="10.181.160.136" />
+		<constructor-arg type="String" value="9042" />
+		<constructor-arg type="String" value="diginius_data" />
+	</bean>
+	
+	
+	
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://c3d89a9da92dc54bace58a0c3df729e166ef7cd6.rackspaceclouddb.com/arindamtest" />
+		<property name="username" value="arindam" />
+		<property name="password" value="dig$dev" />
+	</bean>
+	
+	<bean id="service" class="CdCassandra.Called.sub.ServiceBudgetImpl">
+				
+	</bean>
+	
+
+	<bean id="daoCassendra" class="CdCassendra.Called.DaoImpl.CassandraCRUDImpl">
+		<constructor-arg ref="CassandraCredentials2"></constructor-arg>
+	</bean>
+	<bean id="dao" class="CdCassendra.Called.DaoImpl.AllClientInfoNeededDaoImpl">
+		<constructor-arg ref="dataSource"></constructor-arg>
+	</bean>
+
+	<bean id="fetchDao" class="CdCassendra.Called.DaoImpl.FetchDataFromAdwordsDaoImpl">
+		<constructor-arg ref="dataSource"></constructor-arg>
+		<constructor-arg ref="daoCassendra"></constructor-arg>
+		<constructor-arg ref="service"></constructor-arg>
+		
+	</bean>
+	
+	
+
+</beans>
